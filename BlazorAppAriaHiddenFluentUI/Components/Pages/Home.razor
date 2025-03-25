@@ -1,0 +1,59 @@
+﻿@page "/"
+@* @rendermode InteractiveServer *@
+
+<PageTitle>Home</PageTitle>
+
+<h1>ToolTipp Error</h1>
+
+Open the browser console and click on the back icon (icon is anchore on a tooltip), an error message “Blocked aria-hidden on an element...” will be generated in the console!
+
+<br />
+
+<FluentIcon Id="idBackCounter" Value="@(new Icons.Filled.Size48.ArrowCircleLeft())" OnClick="@(() => NavigationManager!.NavigateTo("/counter"))" />
+
+<FluentTooltip Anchor="idBackCounter" Position="TooltipPosition.Bottom">
+    Go to Counter
+</FluentTooltip>
+
+<br />
+<br />
+
+Click on the second icon (without ToolTip) and the message will no longer appear!
+
+<br />
+<FluentIcon Value="@(new Icons.Filled.Size48.ArrowCircleLeft())" OnClick="@(() => NavigationManager!.NavigateTo("/counter"))" />
+
+
+<br />
+<br />
+
+Click on the button with ToolTip, no error message!!!
+
+<br />
+<FluentButton IconStart="@(new Icons.Regular.Size48.ArrowCircleLeft())"
+              Id="idBackCounterButton"
+              @onclick="@(() => NavigationManager!.NavigateTo("/counter"))">
+</FluentButton>
+<FluentTooltip Anchor="idBackCounterButton" Position="TooltipPosition.Bottom">
+    Go to Counter
+</FluentTooltip>
+@* <br />
+<br />
+
+<FluentIcon Id="myFirstButton" Icon="Icons.Regular.Size24.Notepad" />
+
+<FluentTooltip Anchor="myFirstButton" >
+    Hello World <br />
+    It is a <i>small</i> tootip.
+</FluentTooltip> *@
+
+@code {
+    [Inject]
+    protected NavigationManager? NavigationManager { get; set; }
+    // protected bool visible = false;
+
+    // private void GotoCounter()
+    // {
+    //     NavigationManager!.NavigateTo("/");
+    // }
+}
