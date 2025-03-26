@@ -3,40 +3,104 @@
 
 <PageTitle>Home</PageTitle>
 
-<h1>ToolTipp Error</h1>
+<h2>
+    How to reproduce:<br />
+    1. open the browser console<br />
+    2. click once on the first icon (with ToolTip), the overlay opens.<br />
+    3. close the overlay and move the mouse over the icon again. Hover effect is triggered and also the error message "Cannot set properties of undefined..."<br />
+</h2>
 
-Open the browser console and click on the back icon (icon is anchore on a tooltip), an error message “Blocked aria-hidden on an element...” will be generated in the console!
+<hr />
 
+<h3>Error: Cannot set properties of undefined (setting 'viewportElement')</h3>
+Go to Overlay 
 <br />
-
-<FluentIcon Id="idBackCounter" Value="@(new Icons.Filled.Size48.ArrowCircleLeft())" OnClick="@(() => NavigationManager!.NavigateTo("/counter"))" />
-
-<FluentTooltip Anchor="idBackCounter" Position="TooltipPosition.Bottom">
-    Go to Counter
-</FluentTooltip>
-
-<br />
-<br />
-
-Click on the second icon (without ToolTip) and the message will no longer appear!
-
-<br />
-<FluentIcon Value="@(new Icons.Filled.Size48.ArrowCircleLeft())" OnClick="@(() => NavigationManager!.NavigateTo("/counter"))" />
-
-
-<br />
-<br />
-
-Click on the button with ToolTip, no error message!!!
-
-<br />
-<FluentButton IconStart="@(new Icons.Regular.Size48.ArrowCircleLeft())"
+<FluentButton IconStart="@(new Icons.Regular.Size48.Window())"
               Id="idBackCounterButton"
-              @onclick="@(() => NavigationManager!.NavigateTo("/counter"))">
+              @onclick="@(() => visible = true)">
 </FluentButton>
 <FluentTooltip Anchor="idBackCounterButton" Position="TooltipPosition.Bottom">
-    Go to Counter
+    Go to Overlay
 </FluentTooltip>
+
+<hr />
+
+<h3>No Error (without ToolTip)</h3>
+Go to Overlay
+<br />
+<FluentButton IconStart="@(new Icons.Regular.Size48.Window())"
+              Id="idBackCounterButton"
+              @onclick="@(() => visible = true)">
+</FluentButton>
+@* <FluentTooltip Anchor="idBackCounterButton" Position="TooltipPosition.Bottom">
+    Go to Overlay
+</FluentTooltip> *@
+
+<FluentOverlay @bind-Visible=@visible
+               BackgroundColor="#a9aaab"
+               Opacity="0.5"
+               FullScreen="true"
+               PreventScroll=true>
+
+    <h2>Overlay</h2>
+
+    <hr />
+    <h1>ToolTipp Error</h1>
+
+    Open the browser console and click on the back icon (icon is anchore on a tooltip), an error message “Blocked aria-hidden on an element...” will be generated in the console!
+
+    <br />
+
+    <FluentIcon Id="idBackCounter" Value="@(new Icons.Filled.Size48.ArrowCircleLeft())" OnClick="@(() => NavigationManager!.NavigateTo("/counter"))" />
+
+    <FluentTooltip Anchor="idBackCounter" Position="TooltipPosition.Bottom">
+        Go to Counter
+    </FluentTooltip>
+
+    <br />
+    <br />
+
+    Click on the second icon (without ToolTip) and the message will no longer appear!
+
+    <br />
+    <FluentIcon Value="@(new Icons.Filled.Size48.ArrowCircleLeft())" OnClick="@(() => NavigationManager!.NavigateTo("/counter"))" />
+
+
+    <br />
+    <br />
+
+    Click on the button with ToolTip, no error message!!!
+
+    <br />
+    <FluentButton IconStart="@(new Icons.Regular.Size48.ArrowCircleLeft())"
+                  Id="idBackCounterButton"
+                  @onclick="@(() => NavigationManager!.NavigateTo("/counter"))">
+    </FluentButton>
+    <FluentTooltip Anchor="idBackCounterButton" Position="TooltipPosition.Bottom">
+        Go to Counter
+    </FluentTooltip>
+
+    <br />
+    <hr />
+
+    The solution to the problem is to add Focusable=“true” to Icon
+
+    <br />
+
+    <FluentIcon Id="idBackCounterSolution" Value="@(new Icons.Filled.Size48.ArrowCircleLeft())" OnClick="@(() => NavigationManager!.NavigateTo("/counter"))" Focusable="true" />
+
+    <FluentTooltip Anchor="idBackCounterSolution" Position="TooltipPosition.Bottom">
+        Go to Counter
+    </FluentTooltip>
+
+    <br />
+    <br />
+
+</FluentOverlay>
+
+
+
+
 @* <br />
 <br />
 
@@ -50,7 +114,7 @@ Click on the button with ToolTip, no error message!!!
 @code {
     [Inject]
     protected NavigationManager? NavigationManager { get; set; }
-    // protected bool visible = false;
+    protected bool visible = false;
 
     // private void GotoCounter()
     // {
